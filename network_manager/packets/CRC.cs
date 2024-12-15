@@ -1,4 +1,4 @@
-namespace EQGodot.network_manager.packets;
+namespace OpenLore.network_manager.packets;
 
 public static class CRC
 {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using EQGodot.GameController;
-using EQGodot.resource_manager.wld_file.fragments;
 using Godot;
+using OpenLore.GameController;
+using OpenLore.resource_manager.wld_file.fragments;
 
-namespace EQGodot.resource_manager;
+namespace OpenLore.resource_manager;
 
 [GlobalClass]
 public partial class EqZoneResources : EqResources

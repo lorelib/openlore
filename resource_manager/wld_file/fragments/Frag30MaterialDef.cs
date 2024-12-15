@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using EQGodot.resource_manager.interfaces;
-using EQGodot.resource_manager.wld_file.data_types;
 using Godot;
+using OpenLore.resource_manager.interfaces;
+using OpenLore.resource_manager.wld_file.data_types;
 
-namespace EQGodot.resource_manager.wld_file.fragments;
+namespace OpenLore.resource_manager.wld_file.fragments;
 
 // Lantern Extractor class
 [GlobalClass]

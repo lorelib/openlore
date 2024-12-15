@@ -1,6 +1,6 @@
 using System;
 
-namespace EQGodot;
+namespace OpenLore;
 
 public static class GlobalVariables
 {

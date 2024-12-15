@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace EQGodot.resource_manager.wld_file.fragments;
+namespace OpenLore.resource_manager.wld_file.fragments;
 
 [GlobalClass]
 public partial class Frag35GlobalAmbientLightDef : WldFragment

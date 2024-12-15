@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using Godot;
 
-namespace EQGodot.resource_manager.pack_file;
+namespace OpenLore.resource_manager.pack_file;
 
 public static class PackFileParser
 {

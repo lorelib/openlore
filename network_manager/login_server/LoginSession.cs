@@ -1,10 +1,10 @@
 using System;
-using EQGodot.GameController;
-using EQGodot.network_manager.network_session;
-using EQGodot.network_manager.packets;
 using Godot;
+using OpenLore.GameController;
+using OpenLore.network_manager.network_session;
+using OpenLore.network_manager.packets;
 
-namespace EQGodot.network_manager.login_server;
+namespace OpenLore.network_manager.login_server;
 
 public partial class LoginSession : Node
 {

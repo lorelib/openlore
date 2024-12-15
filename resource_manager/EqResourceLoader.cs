@@ -2,12 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using EQGodot.GameController;
-using EQGodot.resource_manager.godot_resources;
-using EQGodot.resource_manager.pack_file;
 using Godot;
+using OpenLore.GameController;
+using OpenLore.resource_manager.godot_resources;
+using OpenLore.resource_manager.pack_file;
 
-namespace EQGodot.resource_manager;
+namespace OpenLore.resource_manager;
 
 [GlobalClass]
 public partial class EqResourceLoader : Node

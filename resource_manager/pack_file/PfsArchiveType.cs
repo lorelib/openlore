@@ -1,4 +1,4 @@
-﻿namespace EQGodot.resource_manager.pack_file;
+﻿namespace OpenLore.resource_manager.pack_file;
 
 public enum PfsArchiveType
 {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using EQGodot.resource_manager.wld_file;
-using EQGodot.resource_manager.wld_file.fragments;
-using EQGodot.resource_manager.wld_file.helpers;
+using OpenLore.resource_manager.wld_file;
+using OpenLore.resource_manager.wld_file.fragments;
+using OpenLore.resource_manager.wld_file.helpers;
 
-namespace EQGodot.resource_manager.godot_resources.converters;
+namespace OpenLore.resource_manager.godot_resources.converters;
 
 internal static class HierarchicalActorBuilder
 {

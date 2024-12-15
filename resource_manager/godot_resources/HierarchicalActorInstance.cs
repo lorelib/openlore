@@ -1,6 +1,6 @@
 using Godot;
 
-namespace EQGodot.resource_manager.godot_resources;
+namespace OpenLore.resource_manager.godot_resources;
 
 [GlobalClass]
 public partial class HierarchicalActorInstance : Node3D
