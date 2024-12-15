@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwj84uvn1socw"]
+
+[ext_resource type="Script" path="res://login_server/server_selection.cs" id="1_6d3l7"]
+
+[sub_resource type="SystemFont" id="SystemFont_hwdax"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ueabb"]
+font = SubResource("SystemFont_hwdax")
+font_size = 50
+font_color = Color(0.62928, 0.73946, 0.892795, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_u1fyb"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_c865q"]
+font = SubResource("SystemFont_u1fyb")
+font_size = 24
+
+[node name="ServerSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6d3l7")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18945, 0.286158, 0.388274, 1)
+
+[node name="Margins" type="MarginContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 180
+theme_override_constants/margin_right = 180
+
+[node name="VBox" type="VBoxContainer" parent="Background/Margins"]
+layout_mode = 2
+alignment = 1
+
+[node name="LoginScreenLabel" type="Label" parent="Background/Margins/VBox"]
+layout_mode = 2
+text = "Server Selection
+"
+label_settings = SubResource("LabelSettings_ueabb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ServerList" type="ItemList" parent="Background/Margins/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 160)
+layout_mode = 2
+
+[node name="ServerOKMContainer" type="MarginContainer" parent="Background/Margins/VBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="ServerOKButton" type="Button" parent="Background/Margins/VBox/ServerOKMContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Select Server"
+
+[node name="StatusLabel" type="Label" parent="Background/Margins/VBox"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_c865q")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="Background/Margins/VBox/ServerOKMContainer/ServerOKButton" to="." method="OnServerAccepted"]

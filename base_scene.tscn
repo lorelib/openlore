@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://bav1ji3y2p1d4"]
+
+[ext_resource type="Script" path="res://base_scene.gd" id="1_p6kus"]
+[ext_resource type="Script" path="res://addons/debug_camera/scripts/DebugCamera3D.gd" id="2_jnlh8"]
+[ext_resource type="Script" path="res://button.gd" id="3_uaip4"]
+[ext_resource type="Script" path="res://class_selection.gd" id="4_slpxg"]
+
+[node name="BaseScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_p6kus")
+
+[node name="Button" type="Button" parent="."]
+offset_right = 41.0
+offset_bottom = 29.0
+text = "Do"
+script = ExtResource("3_uaip4")
+
+[node name="ClassSelection" type="ItemList" parent="."]
+visible = false
+offset_top = 32.0
+offset_right = 61.0
+offset_bottom = 447.0
+item_count = 15
+item_0/text = "1"
+item_1/text = "2"
+item_2/text = "3"
+item_3/text = "4"
+item_4/text = "5"
+item_5/text = "6"
+item_6/text = "7"
+item_7/text = "8"
+item_8/text = "9"
+item_9/text = "10"
+item_10/text = "11"
+item_11/text = "12"
+item_12/text = "13"
+item_13/text = "14"
+item_14/text = "15"
+script = ExtResource("4_slpxg")
+
+[node name="CameraPosition" type="Node3D" parent="."]
+
+[node name="CameraDefaultRotation" type="Node3D" parent="CameraPosition"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraDefaultRotation"]
+script = ExtResource("2_jnlh8")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CameraPosition/CameraDefaultRotation/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.44355e-08, 0, -3.11993e-08, 1, 1.03417, 1.08536, 0.0851126)
+light_energy = 2.057
+light_indirect_energy = 3.238
+light_size = 0.168
+omni_range = 200.0
+omni_attenuation = 0.210224
+
+[connection signal="pressed" from="Button" to="Button" method="_on_button_pressed"]
+[connection signal="item_selected" from="ClassSelection" to="ClassSelection" method="_on_item_selected"]

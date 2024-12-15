@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="EQGodot"
+run/main_scene="res://GameController/GameController.tscn"
+config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+run/max_fps=60
+boot_splash/bg_color=Color(0.259183, 0.347112, 0.167039, 1)
+config/icon="res://icon.svg"
+
+[autoload]
+
+DebugCam="*res://addons/debug_camera/scripts/DebugCamAutoload.gd"
+
+[dotnet]
+
+project/assembly_name="EQGodot"
+
+[editor]
+
+import/use_multiple_threads=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debug_camera/plugin.cfg", "res://addons/pfs_loader/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false

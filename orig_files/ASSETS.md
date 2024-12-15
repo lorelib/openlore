@@ -1,0 +1,1 @@
+﻿This directory holds the original game assets, you can copy your files into this folder.

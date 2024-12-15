@@ -1,0 +1,117 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtnn2tjnfjhur"]
+
+[ext_resource type="Script" path="res://login_server/login_screen.cs" id="1_ywp1l"]
+
+[sub_resource type="SystemFont" id="SystemFont_c7fbu"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_3w1ld"]
+font = SubResource("SystemFont_c7fbu")
+font_size = 50
+font_color = Color(0.62928, 0.73946, 0.892795, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_kk0yf"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_aasuy"]
+line_spacing = 32.0
+font = SubResource("SystemFont_kk0yf")
+font_size = 32
+font_color = Color(0.629787, 0.627953, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_du5e1"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_78qre"]
+font = SubResource("SystemFont_du5e1")
+font_size = 24
+
+[node name="LoginScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ywp1l")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18945, 0.286158, 0.388274, 1)
+
+[node name="Margins" type="MarginContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 180
+theme_override_constants/margin_right = 180
+
+[node name="VBox" type="VBoxContainer" parent="Background/Margins"]
+layout_mode = 2
+alignment = 1
+
+[node name="LoginScreenLabel" type="Label" parent="Background/Margins/VBox"]
+layout_mode = 2
+text = "Login Screen
+"
+label_settings = SubResource("LabelSettings_3w1ld")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsernameLabel" type="Label" parent="Background/Margins/VBox"]
+layout_mode = 2
+text = "Username"
+label_settings = SubResource("LabelSettings_aasuy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsernameLineEdit" type="LineEdit" parent="Background/Margins/VBox"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+text = "default"
+max_length = 64
+
+[node name="PasswordLabel" type="Label" parent="Background/Margins/VBox"]
+layout_mode = 2
+text = "Password"
+label_settings = SubResource("LabelSettings_aasuy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="Background/Margins/VBox"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+text = "default"
+max_length = 64
+secret = true
+
+[node name="LoginMContainer" type="MarginContainer" parent="Background/Margins/VBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="LoginButton" type="Button" parent="Background/Margins/VBox/LoginMContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Login"
+
+[node name="StatusLabel" type="Label" parent="Background/Margins/VBox"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_78qre")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="text_changed" from="Background/Margins/VBox/UsernameLineEdit" to="." method="OnLoginChanged"]
+[connection signal="text_changed" from="Background/Margins/VBox/PasswordLineEdit" to="." method="OnPasswordChanged"]
+[connection signal="pressed" from="Background/Margins/VBox/LoginMContainer/LoginButton" to="." method="OnLoginButtonPressed"]
