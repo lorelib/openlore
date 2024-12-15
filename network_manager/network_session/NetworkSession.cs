@@ -1,8 +1,8 @@
 using System;
-using EQGodot.network_manager.packets;
 using Godot;
+using OpenLore.network_manager.packets;
 
-namespace EQGodot.network_manager.network_session;
+namespace OpenLore.network_manager.network_session;
 
 public partial class NetworkSession : PacketPeerUdp
 {

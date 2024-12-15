@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using EQGodot.network_manager.packets;
 using Godot;
+using OpenLore.network_manager.packets;
 
-namespace EQGodot.network_manager.network_session;
+namespace OpenLore.network_manager.network_session;
 
 public class OpcodeManager
 {

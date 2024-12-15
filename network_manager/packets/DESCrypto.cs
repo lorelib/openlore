@@ -24,7 +24,7 @@
 
 using System;
 
-namespace EQGodot.network_manager.packets;
+namespace OpenLore.network_manager.packets;
 
 internal class DESCrypto
 {

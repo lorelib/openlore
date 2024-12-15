@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace EQGodot.addons.pfs_loader.Importers;
+namespace OpenLore.addons.pfs_loader.Importers;
 
 [Tool]
 [GlobalClass]

@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace EQGodot.network_manager.packets;
+namespace OpenLore.network_manager.packets;
 
 public class PacketWriter
 {

@@ -1,11 +1,11 @@
-using EQGodot.login_server;
-using EQGodot.network_manager.login_server;
-using EQGodot.network_manager.world_server;
-using EQGodot.resource_manager;
-using Godot;
 using System;
+using Godot;
+using OpenLore.login_server;
+using OpenLore.network_manager.login_server;
+using OpenLore.network_manager.world_server;
+using OpenLore.resource_manager;
 
-namespace EQGodot.GameController;
+namespace OpenLore.GameController;
 
 public partial class GameController : Node
 {

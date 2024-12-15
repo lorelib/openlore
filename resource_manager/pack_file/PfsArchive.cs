@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using EQGodot.resource_manager.wld_file;
 using Godot;
 using Godot.Collections;
+using OpenLore.resource_manager.wld_file;
 using Pfim;
 using Bitmap = System.Drawing.Bitmap;
 using Color = System.Drawing.Color;
 
-namespace EQGodot.resource_manager.pack_file;
+namespace OpenLore.resource_manager.pack_file;
 
 [GlobalClass]
 public partial class PfsArchive : Resource

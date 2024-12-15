@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using EQGodot.resource_manager.wld_file.fragments;
+using OpenLore.resource_manager.wld_file.fragments;
 
-namespace EQGodot.resource_manager.wld_file;
+namespace OpenLore.resource_manager.wld_file;
 
 // Lantern Extractor class
 public static class WldFragmentBuilder

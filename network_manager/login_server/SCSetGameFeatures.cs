@@ -1,8 +1,8 @@
 using System;
-using EQGodot.network_manager.network_session;
-using EQGodot.network_manager.packets;
+using OpenLore.network_manager.network_session;
+using OpenLore.network_manager.packets;
 
-namespace EQGodot.network_manager.login_server;
+namespace OpenLore.network_manager.login_server;
 
 public class SCSetGameFeatures(PacketReader reader) : AppPacket(reader)
 {

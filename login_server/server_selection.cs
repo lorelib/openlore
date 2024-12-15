@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using EQGodot.network_manager.login_server;
 using Godot;
+using OpenLore.network_manager.login_server;
 
-namespace EQGodot.login_server;
+namespace OpenLore.login_server;
 
 public partial class server_selection : Control
 {
