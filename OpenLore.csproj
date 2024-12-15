@@ -1,0 +1,14 @@
+<Project Sdk="Godot.NET.Sdk/4.3.0">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
+        <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Nito.HashAlgorithms.CRC" Version="1.0.1" />
+        <PackageReference Include="Pfim" Version="0.11.3" />
+        <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+        <PackageReference Include="YamlDotNet" Version="16.2.1" />
+    </ItemGroup>
+</Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EQGodot", "EQGodot.csproj", "{DDFE35FB-AC86-49A7-A617-7407C3341077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenLore", "OpenLore.csproj", "{DDFE35FB-AC86-49A7-A617-7407C3341077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

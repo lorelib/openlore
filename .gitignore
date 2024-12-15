@@ -15,10 +15,10 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 
-# Editor ignores
+# c# Editor ignores
 .idea/
 .vs/
-EQGodot.sln.DotSettings.user
+OpenLore.sln.DotSettings.user
 
 # Other files
 orig_files/
