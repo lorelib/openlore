@@ -1,8 +1,8 @@
 using System;
-using EQGodot.network_manager.network_session;
 using Godot;
+using OpenLore.network_manager.network_session;
 
-namespace EQGodot.network_manager.login_server;
+namespace OpenLore.network_manager.login_server;
 
 public class CSJoinServer(uint serverId) : AppPacket
 {

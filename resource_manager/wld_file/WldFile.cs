@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using EQGodot.resource_manager.godot_resources;
-using EQGodot.resource_manager.godot_resources.converters;
-using EQGodot.resource_manager.pack_file;
-using EQGodot.resource_manager.wld_file.fragments;
-using EQGodot.resource_manager.wld_file.helpers;
 using Godot;
 using Godot.Collections;
+using OpenLore.resource_manager.godot_resources;
+using OpenLore.resource_manager.godot_resources.converters;
+using OpenLore.resource_manager.pack_file;
+using OpenLore.resource_manager.wld_file.fragments;
+using OpenLore.resource_manager.wld_file.helpers;
 
-namespace EQGodot.resource_manager.wld_file;
+namespace OpenLore.resource_manager.wld_file;
 
 // Lantern Extractor class
 public partial class WldFile : Resource

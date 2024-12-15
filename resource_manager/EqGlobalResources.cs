@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using System.IO;
-using EQGodot.GameController;
+﻿using System.IO;
 using Godot;
+using OpenLore.GameController;
 
-namespace EQGodot.resource_manager;
+namespace OpenLore.resource_manager;
 
 public partial class EqGlobalResources : EqResources
 {

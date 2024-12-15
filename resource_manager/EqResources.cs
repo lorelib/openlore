@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using EQGodot.resource_manager.godot_resources;
 using Godot;
+using OpenLore.resource_manager.godot_resources;
 
-namespace EQGodot.resource_manager;
+namespace OpenLore.resource_manager;
 
 [GlobalClass]
 public abstract partial class EqResources : Node

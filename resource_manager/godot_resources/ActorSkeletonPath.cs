@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using EQGodot.resource_manager.wld_file.fragments;
 using Godot;
 using Godot.Collections;
+using OpenLore.resource_manager.wld_file.fragments;
 
-namespace EQGodot.resource_manager.godot_resources;
+namespace OpenLore.resource_manager.godot_resources;
 
 public partial class ActorSkeletonPath : Resource
 {

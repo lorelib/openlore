@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using EQGodot.resource_manager.godot_resources;
 using Godot;
+using OpenLore.resource_manager.godot_resources;
 
-namespace EQGodot.resource_manager;
+namespace OpenLore.resource_manager;
 
 [GlobalClass]
 public partial class ResourceManager : Node

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Godot;
 
-namespace EQGodot.resource_manager.wld_file.fragments;
+namespace OpenLore.resource_manager.wld_file.fragments;
 
 // Lantern Extractor class
 [GlobalClass]

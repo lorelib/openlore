@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace EQGodot.resource_manager.interfaces;
+namespace OpenLore.resource_manager.interfaces;
 
 public interface IIntoGodotMaterial
 {

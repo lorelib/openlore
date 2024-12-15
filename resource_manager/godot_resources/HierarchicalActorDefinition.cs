@@ -2,7 +2,7 @@
 using Godot;
 using Godot.Collections;
 
-namespace EQGodot.resource_manager.godot_resources;
+namespace OpenLore.resource_manager.godot_resources;
 
 [GlobalClass]
 public partial class HierarchicalActorDefinition : ActorDefinition

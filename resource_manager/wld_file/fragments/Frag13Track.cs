@@ -1,8 +1,8 @@
 ﻿using System;
-using EQGodot.resource_manager.wld_file.helpers;
 using Godot;
+using OpenLore.resource_manager.wld_file.helpers;
 
-namespace EQGodot.resource_manager.wld_file.fragments;
+namespace OpenLore.resource_manager.wld_file.fragments;
 
 // Lantern Extractor class
 [GlobalClass]

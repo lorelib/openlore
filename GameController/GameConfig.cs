@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Net;
 
-namespace EQGodot.GameController;
+namespace OpenLore.GameController;
 
 public sealed class GameConfig
 {

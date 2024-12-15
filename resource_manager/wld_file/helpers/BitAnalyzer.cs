@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace EQGodot.resource_manager.wld_file.helpers;
+namespace OpenLore.resource_manager.wld_file.helpers;
 
 // Lantern Extractor class
 public class BitAnalyzer
