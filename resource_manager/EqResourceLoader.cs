@@ -13,6 +13,7 @@ namespace OpenLore.resource_manager;
 public partial class EqResourceLoader : Node
 {
     [Export] public string FileName;
+    [Export] public string RequestedFileName;
     [Export] public bool Loaded;
     [Export] public bool Failed;
     [Export] public int AgeCounter;
@@ -23,12 +24,11 @@ public partial class EqResourceLoader : Node
     [Export] public Godot.Collections.Dictionary<string, Resource> ActorDefs = [];
     [Export] public Godot.Collections.Dictionary<int, ActorSkeletonPath> ExtraAnimations = [];
 
-
     private Task<bool> _task;
 
     public override void _Ready()
     {
-        _task = Task.Run(async () => await LoadFile(Name));
+        _task = Task.Run(async () => await LoadFile(RequestedFileName));
     }
 
     public override void _Process(double delta)
@@ -80,9 +80,17 @@ public partial class EqResourceLoader : Node
             return false;
         }
 
+        var archive = await PackFileParser.Load(FileName);
+        Images = await archive.ProcessImages();
+
         if (FileName.EndsWith(".s3d"))
         {
-            return await ProcessS3DFile(FileName);
+            return await ProcessS3DFile(archive);
+        }
+
+        if (FileName.EndsWith(".eqg"))
+        {
+            return await ProcessEQGFile(archive);
         }
 
         GD.PrintErr($"EqResourceLoader: {name} is an eqg and unsupported!");
@@ -98,13 +106,9 @@ public partial class EqResourceLoader : Node
         return results.FirstOrDefault(result => result != null);
     }
 
-    private async Task<bool> ProcessS3DFile(string filename)
+    private async Task<bool> ProcessS3DFile(PfsArchive archive)
     {
-        GD.Print($"EqResourceLoader: starting to load {filename}");
-        var archive = await PackFileParser.Load(filename);
-        GD.Print($"EqResourceLoader: processing images {filename}");
-        Images = await archive.ProcessImages();
-        GD.Print($"EqResourceLoader: loaded images {filename} - count {Images.Count}");
+        GD.Print($"EqResourceLoader: processing S3D {FileName} - images {Images.Count}");
         var wldFiles = archive.ProcessWldFiles(this);
         if (wldFiles.TryGetValue("objects.wld", out var objectsWld))
         {
@@ -122,6 +126,12 @@ public partial class EqResourceLoader : Node
             ExtraAnimations = mainWld.ExtraAnimations;
         }
 
+        return true;
+    }
+
+    private async Task<bool> ProcessEQGFile(PfsArchive archive)
+    {
+        GD.Print($"EqResourceLoader: processing EQG {FileName} - images {Images.Count}");
         return true;
     }
 }
