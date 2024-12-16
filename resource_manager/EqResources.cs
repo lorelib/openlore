@@ -47,7 +47,8 @@ public abstract partial class EqResources : Node
     {
         var loader = new EqResourceLoader()
         {
-            Name = name.ToLower(),
+            Name = name.ToLower(), // Name replaces . with _
+            RequestedFileName = name.ToLower(),
             AgeCounter = _ageCounter
         };
         loader.SetProcessThreadGroup(ProcessThreadGroupEnum.SubThread);
