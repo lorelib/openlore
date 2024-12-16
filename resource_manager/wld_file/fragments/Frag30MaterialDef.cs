@@ -208,7 +208,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
         var data = image.GetData();
         for (var i = 0; i < data.Length; i += 4)
         {
-            if (data[i] != r || data[i + 1] != g || data[i + 2] != b || data[i + 3] != a) continue;
+            if (data[i] != r || data[i + 1] != g || data[i + 2] != b) continue;
             data[i + 0] = 0;
             data[i + 1] = 0;
             data[i + 2] = 0;
@@ -216,6 +216,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
         }
 
         var result = Image.CreateFromData(image.GetWidth(), image.GetHeight(), false, Image.Format.Rgba8, data);
+        result.SetMeta("transparency_applied", true);
         result.ResourceName = image.ResourceName;
         foreach (var metaName in image.GetMetaList())
         {
