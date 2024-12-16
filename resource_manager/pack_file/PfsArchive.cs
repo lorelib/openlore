@@ -7,8 +7,6 @@ using Godot;
 using Godot.Collections;
 using OpenLore.resource_manager.wld_file;
 using Pfim;
-using Bitmap = System.Drawing.Bitmap;
-using Color = System.Drawing.Color;
 
 namespace OpenLore.resource_manager.pack_file;
 
@@ -100,51 +98,50 @@ public partial class PfsArchive : Resource
     {
         try
         {
-            //GD.Print("Need to process texture: ", pfsFile.Name);
-            // GD.Print(pfsFile.FileBytes.HexEncode());
-            var bitmap = new Bitmap(new MemoryStream(pfsFile.FileBytes));
-            var data = new byte[bitmap.Width * bitmap.Height * 4];
-            var offset = 0;
-            for (var y = 0; y < bitmap.Height; y++)
-            for (var x = 0; x < bitmap.Width; x++)
+            var image = new Image();
+            var error = image.LoadBmpFromBuffer(pfsFile.FileBytes);
+            if (error != Error.Ok)
             {
-                var color = bitmap.GetPixel(x, y);
-
-                data[offset + 0] = color.R;
-                data[offset + 1] = color.G;
-                data[offset + 2] = color.B;
-                data[offset + 3] = color.A;
-                offset += 4;
+                GD.PrintErr($"ProcessBMPImage: Exception while processing image from {pfsFile.Name}: {error}");
+                return (pfsFile.Name, null);
             }
 
-            try
+            image.FlipY();
+            image.SetMeta("pfs_file_name", pfsFile.ArchiveName);
+            image.SetMeta("original_file_name", pfsFile.Name);
+            image.SetMeta("original_file_type", "BMP");
+
+            var reader = new BinaryReader(new MemoryStream(pfsFile.FileBytes));
+            reader.ReadBytes(14); // Skip standard header
+            var dibHeaderSize = reader.ReadUInt32();
+            if (dibHeaderSize == 40)
             {
-                var image = Image.CreateFromData(bitmap.Width, bitmap.Height, false, Image.Format.Rgba8, data);
-                image.FlipY();
-                image.SetMeta("pfs_file_name", pfsFile.ArchiveName);
-                image.SetMeta("original_file_name", pfsFile.Name);
-                image.SetMeta("original_file_type", "BMP");
-                if (bitmap.Palette.Entries.Length > 0)
+                reader.ReadBytes(10); // Skip bytes in BITMAPINFOHEADER
+                var colorDepth = reader.ReadUInt16();
+                var compressionMode = reader.ReadUInt32();
+                if (compressionMode == 0 && colorDepth == 8)
                 {
-                    Color transparent = (Color)bitmap.Palette.Entries.GetValue(0);
+                    reader.ReadBytes(20);
                     image.SetMeta("palette_present", true);
-                    image.SetMeta("transparent_r", transparent.R);
-                    image.SetMeta("transparent_g", transparent.G);
-                    image.SetMeta("transparent_b", transparent.B);
-                    image.SetMeta("transparent_a", transparent.A);
+                    image.SetMeta("transparent_b", reader.ReadByte());
+                    image.SetMeta("transparent_g", reader.ReadByte());
+                    image.SetMeta("transparent_r", reader.ReadByte());
+                    image.SetMeta("transparent_a", reader.ReadByte());
                 }
                 else
                 {
+                    GD.PrintErr(
+                        $"ProcessBMPImage: Compression mode {compressionMode} with colorDepth {colorDepth} is not supported");
                     image.SetMeta("palette_present", false);
                 }
-
-                image.ResourceName = pfsFile.Name;
-                return (pfsFile.Name, image);
             }
-            catch (Exception ex)
+            else
             {
-                GD.PrintErr($"ProcessBMPImage: Exception while creating image from {pfsFile.Name}: {ex}");
+                image.SetMeta("palette_present", false);
             }
+
+            image.ResourceName = pfsFile.Name;
+            return (pfsFile.Name, image);
         }
         catch (Exception ex)
         {
