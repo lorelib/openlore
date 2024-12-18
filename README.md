@@ -14,4 +14,5 @@ more information please visit their github: https://github.com/LanternEQ/Lantern
 
 ## Running
 
-The folder `orig_files` should contain all the original files, you can copy your original folder there.
+- The folder `orig_files` needs to have assets for a "game", you can copy your original folder there.
+- Copy open_lore.yaml.sample to open_lore.yaml
