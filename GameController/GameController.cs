@@ -28,10 +28,21 @@ public partial class GameController : Node
 
     private State _state = State.NONE;
 
+    [Export]
+    private bool _debugSkipLogin = false;
+
     public override void _Ready()
     {
         _resources = GetNode<ResourceManager>("ResourceManager");
-        SwitchState(State.RENDERING);
+        if (_debugSkipLogin)
+        {
+            SwitchState(State.RENDERING);
+        }
+        else
+        {
+            SwitchState(State.LOGIN);
+
+        }
     }
 
     public override void _Process(double delta)
