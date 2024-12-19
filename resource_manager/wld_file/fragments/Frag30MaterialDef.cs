@@ -114,7 +114,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
                 Godot.Collections.Array<Image> a = [];
                 foreach (var image in bitmapNames.Select(Loader.GetImage))
                 {
-                    a.Add(ApplyBmpTransparency(image));
+                    a.Add(ShouldApplyTransparency() ? image.GetTransparent() : image);
                 }
 
                 var texture2DArray = new Texture2DArray();
@@ -169,7 +169,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
                 BlendMode = ShaderType is ShaderTypeEnumType.TransparentAdditive
                     ? BaseMaterial3D.BlendModeEnum.Add
                     : BaseMaterial3D.BlendModeEnum.Mix,
-                AlbedoTexture = ImageToTexture(ApplyBmpTransparency(firstImage)),
+                AlbedoTexture = ImageToTexture(ShouldApplyTransparency() ? firstImage.GetTransparent() : firstImage),
                 CullMode = (Flags & 0x1) != 0
                     ? BaseMaterial3D.CullModeEnum.Disabled
                     : BaseMaterial3D.CullModeEnum.Back,
@@ -191,39 +191,6 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
     private bool ShouldApplyTransparency()
     {
         return ShaderType is ShaderTypeEnumType.TransparentMasked or ShaderTypeEnumType.TransparentAdditive;
-    }
-
-    private Image ApplyBmpTransparency(Image image)
-    {
-        if (!ShouldApplyTransparency() ||
-            (image.HasMeta("palette_present") && (bool)image.GetMeta("palette_present") == false))
-            return image;
-
-        if ((string)image.GetMeta("original_file_type") != "BMP") return image;
-        var a = (int)image.GetMeta("transparent_a");
-        var r = (int)image.GetMeta("transparent_r");
-        var g = (int)image.GetMeta("transparent_g");
-        var b = (int)image.GetMeta("transparent_b");
-
-        var data = image.GetData();
-        for (var i = 0; i < data.Length; i += 4)
-        {
-            if (data[i] != r || data[i + 1] != g || data[i + 2] != b) continue;
-            data[i + 0] = 0;
-            data[i + 1] = 0;
-            data[i + 2] = 0;
-            data[i + 3] = 0;
-        }
-
-        var result = Image.CreateFromData(image.GetWidth(), image.GetHeight(), false, Image.Format.Rgba8, data);
-        result.SetMeta("transparency_applied", true);
-        result.ResourceName = image.ResourceName;
-        foreach (var metaName in image.GetMetaList())
-        {
-            result.SetMeta(metaName, image.GetMeta(metaName));
-        }
-
-        return result;
     }
 
     private static ImageTexture ImageToTexture(Image image)

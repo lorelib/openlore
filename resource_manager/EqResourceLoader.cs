@@ -18,7 +18,7 @@ public partial class EqResourceLoader : Node
     [Export] public bool Failed;
     [Export] public int AgeCounter;
 
-    [Export] public Godot.Collections.Dictionary<string, Image> Images = [];
+    [Export] public Godot.Collections.Dictionary<string, LoreImage> Images = [];
     [Export] public Godot.Collections.Dictionary<int, Material> Materials = [];
     [Export] public Godot.Collections.Dictionary<int, ArrayMesh> Meshes = [];
     [Export] public Godot.Collections.Dictionary<string, Resource> ActorDefs = [];
@@ -46,7 +46,7 @@ public partial class EqResourceLoader : Node
         GD.Print($"EqResourceLoader: completed processing {Name} age {AgeCounter} failed {Failed}");
     }
 
-    public Image GetImage(string imageName)
+    public LoreImage GetImage(string imageName)
     {
         return Failed ? null : Images.GetValueOrDefault(imageName);
     }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
+using OpenLore.resource_manager.godot_resources;
 using OpenLore.resource_manager.wld_file;
 using Pfim;
 
@@ -18,9 +19,9 @@ public partial class PfsArchive : Resource
     [Export] public Godot.Collections.Dictionary<string, WldFile> WldFiles = [];
     [Export] public PfsArchiveType Type;
 
-    public async Task<Godot.Collections.Dictionary<string, Image>> ProcessImages()
+    public async Task<Godot.Collections.Dictionary<string, LoreImage>> ProcessImages()
     {
-        List<Task<(string, Image)>> tasks = [];
+        List<Task<(string, LoreImage)>> tasks = [];
         for (var i = 0; i < Files.Count; i++)
         {
             if (Files[i] is not PFSFile file)
@@ -44,7 +45,7 @@ public partial class PfsArchive : Resource
         }
 
         var images = await Task.WhenAll([..tasks]);
-        Godot.Collections.Dictionary<string, Image> result = [];
+        Godot.Collections.Dictionary<string, LoreImage> result = [];
         foreach (var im in images)
         {
             result.Add(im.Item1, im.Item2);
@@ -53,7 +54,7 @@ public partial class PfsArchive : Resource
         return result;
     }
 
-    private async Task<(string, Image)> ProcessDdsImage(PFSFile pfsFile)
+    private async Task<(string, LoreImage)> ProcessDdsImage(PFSFile pfsFile)
     {
         try
         {
@@ -74,8 +75,8 @@ public partial class PfsArchive : Resource
 
             try
             {
-                var image = Image.CreateFromData(dds.Width, dds.Height, dds.MipMaps.Length > 1, Image.Format.Rgba8,
-                    dds.Data);
+                var image = new LoreImage(pfsFile.Name, Image.CreateFromData(dds.Width, dds.Height,
+                    dds.MipMaps.Length > 1, Image.Format.Rgba8, dds.Data));
                 image.SetMeta("pfs_file_name", pfsFile.ArchiveName);
                 image.SetMeta("original_file_name", pfsFile.Name);
                 image.SetMeta("original_file_type", "DDS");
@@ -94,11 +95,11 @@ public partial class PfsArchive : Resource
         return (pfsFile.Name, null);
     }
 
-    private async Task<(string, Image)> ProcessBmpImage(PFSFile pfsFile)
+    private async Task<(string, LoreImage)> ProcessBmpImage(PFSFile pfsFile)
     {
         try
         {
-            var image = new Image();
+            var image = new LoreImage() { ResourceName = pfsFile.Name };
             var error = image.LoadBmpFromBuffer(pfsFile.FileBytes);
             if (error != Error.Ok)
             {
