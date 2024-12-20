@@ -2,7 +2,7 @@
 
 namespace OpenLore.resource_manager.pack_file;
 
-public partial class PFSFile : Resource
+public partial class PfsFile : Resource
 {
     public uint Crc;
     public uint Size;
@@ -11,7 +11,7 @@ public partial class PFSFile : Resource
     public string Name;
     public string ArchiveName;
 
-    public PFSFile(string archiveName, uint crc, uint size, uint offset, byte[] fileBytes)
+    public PfsFile(string archiveName, uint crc, uint size, uint offset, byte[] fileBytes)
     {
         Crc = crc;
         Size = size;

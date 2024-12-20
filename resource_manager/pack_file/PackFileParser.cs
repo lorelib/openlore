@@ -24,7 +24,7 @@ public static class PackFileParser
         var fileCount = reader.ReadInt32();
         var fileNames = new List<string>();
 
-        var files = new List<PFSFile>();
+        var files = new List<PfsFile>();
 
         for (var i = 0; i < fileCount; i++)
         {
@@ -83,7 +83,7 @@ public static class PackFileParser
                 continue;
             }
 
-            files.Add(new PFSFile(path, crc, size, offset, fileBytes));
+            files.Add(new PfsFile(path, crc, size, offset, fileBytes));
             reader.BaseStream.Position = cachedOffset;
         }
 
