@@ -114,7 +114,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
                 Godot.Collections.Array<Image> a = [];
                 foreach (var image in bitmapNames.Select(Loader.GetImage))
                 {
-                    a.Add(ShouldApplyTransparency() ? image.GetTransparent() : image);
+                    a.Add(ShouldApplyTransparency() ? image.Transparent() : image);
                 }
 
                 var texture2DArray = new Texture2DArray();
@@ -169,7 +169,7 @@ public partial class Frag30MaterialDef : WldFragment, IIntoGodotMaterial
                 BlendMode = ShaderType is ShaderTypeEnumType.TransparentAdditive
                     ? BaseMaterial3D.BlendModeEnum.Add
                     : BaseMaterial3D.BlendModeEnum.Mix,
-                AlbedoTexture = ImageToTexture(ShouldApplyTransparency() ? firstImage.GetTransparent() : firstImage),
+                AlbedoTexture = ImageToTexture(ShouldApplyTransparency() ? firstImage.Transparent() : firstImage),
                 CullMode = (Flags & 0x1) != 0
                     ? BaseMaterial3D.CullModeEnum.Disabled
                     : BaseMaterial3D.CullModeEnum.Back,
