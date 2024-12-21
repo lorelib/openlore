@@ -8,7 +8,6 @@ using OpenLore.resource_manager.godot_resources;
 using OpenLore.resource_manager.godot_resources.converters;
 using OpenLore.resource_manager.pack_file;
 using OpenLore.resource_manager.wld_file.fragments;
-using OpenLore.resource_manager.wld_file.helpers;
 
 namespace OpenLore.resource_manager.wld_file;
 
@@ -35,7 +34,7 @@ public partial class WldFile : Resource
     private Godot.Collections.Dictionary<int, byte[]> _fragmentContents = [];
     private Godot.Collections.Dictionary<string, WldFragment> _fragmentNameDictionary = [];
     private Godot.Collections.Dictionary<int, int> _fragmentTypes = [];
-    private Godot.Collections.Dictionary<int, string> _strings = [];
+    private WldStrings _strings;
 
     public WldFile()
         : this(null, null)
@@ -87,27 +86,17 @@ public partial class WldFile : Resource
         var fragmentCount = reader.ReadUInt32();
         var bspRegionCount = reader.ReadUInt32();
         var maxObjectBytes = reader.ReadInt32();
-        var stringHashSize = reader.ReadUInt32();
+        var stringHashSize = reader.ReadInt32();
         var stringCount = reader.ReadInt32();
 
-        var strings = reader.ReadBytes((int)stringHashSize);
-        var decoded = WldStringDecoder.Decode(strings);
-
-        _strings = [];
-        var index = 0;
-        var splitHash = decoded.Split('\0');
-
-        foreach (var hashString in splitHash)
-        {
-            _strings[index] = hashString;
-            index += hashString.Length + 1;
-        }
+        var strings = reader.ReadBytes(stringHashSize);
+        _strings = new WldStrings(strings);
 
         for (var i = 1; i <= fragmentCount; ++i)
         {
-            var fragSize = reader.ReadUInt32();
+            var fragSize = reader.ReadInt32();
             var fragType = reader.ReadInt32();
-            var fragmentContents = reader.ReadBytes((int)fragSize);
+            var fragmentContents = reader.ReadBytes(fragSize);
 
             _fragmentTypes[i + 1] = fragType;
             _fragmentContents[i + 1] = fragmentContents;
@@ -125,7 +114,7 @@ public partial class WldFile : Resource
                 break;
             }
 
-            newFragment.Initialize(i, fragType, (int)fragSize, fragmentContents, this, loader);
+            newFragment.Initialize(i, fragType, fragSize, fragmentContents, this, loader);
 
             _fragments.Add(newFragment);
             if (!_fragmentTypeDictionary.ContainsKey(newFragment.GetType()))
@@ -138,16 +127,12 @@ public partial class WldFile : Resource
 
             _fragmentTypeDictionary[newFragment.GetType()].Add(newFragment);
         }
-
-        // GD.Print($"WldFile {Name}: finished loading.");
+        
         BuildMaterials();
-        // BuildNewMeshes();
         BuildActorDefs();
         BuildAnimations();
-        
         BuildWorldTree();
         BuildLights();
-        // GD.Print($"WldFile {Name}: completed.");
     }
 
     [Export] public string Name { get; set; }
@@ -162,20 +147,8 @@ public partial class WldFile : Resource
 
     public string GetName(int reference)
     {
-        switch (reference)
-        {
-            case < 0:
-            {
-                if (!_strings.ContainsKey(-reference)) GD.PrintErr($"WldFile {Name}: String not found at {-reference}");
-
-                return _strings[-reference];
-            }
-            case 0:
-                return string.Empty;
-            default:
-                return _fragments[reference].Name;
-        }
-    }
+        return _strings.GetName(reference) ?? _fragments[reference].Name;
+    } 
 
     public WldFragment GetFragmentByName(string name)
     {
@@ -186,7 +159,7 @@ public partial class WldFile : Resource
     {
         return reference switch
         {
-            < 0 => _fragmentNameDictionary[_strings[-reference]],
+            < 0 => _fragmentNameDictionary[_strings.GetName(reference)],
             0 => null,
             _ => _fragments[reference]
         };
