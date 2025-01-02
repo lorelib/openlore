@@ -13,7 +13,7 @@ public partial class Frag15ActorInstance : WldFragment
     [Export] public Vector3 Rotation;
     [Export] public Vector3 Scale;
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());

@@ -10,7 +10,7 @@ using OpenLore.resource_manager.pack_file;
 namespace OpenLore.resource_manager;
 
 [GlobalClass]
-public partial class EqResourceLoader : Node
+public partial class LoreResourceLoader : Node
 {
     [Export] public string FileName;
     [Export] public string RequestedFileName;
@@ -43,7 +43,7 @@ public partial class EqResourceLoader : Node
         Loaded = true;
         _task = null;
 
-        GD.Print($"EqResourceLoader: completed processing {Name} age {AgeCounter} failed {Failed}");
+        GD.Print($"LoreResourceLoader: completed processing {Name} age {AgeCounter} failed {Failed}");
     }
 
     public LoreImage GetImage(string imageName)
@@ -71,12 +71,12 @@ public partial class EqResourceLoader : Node
 
     private async Task<bool> LoadFile(string name)
     {
-        GD.Print($"EqResourceLoader: requesting {name} at age {AgeCounter}");
+        GD.Print($"LoreResourceLoader: requesting {name} at age {AgeCounter}");
         var assetPath = GameConfig.Instance.AssetPath;
         FileName = await TestFiles([$"{assetPath}/{name}", $"{assetPath}/{name}.eqg", $"{assetPath}/{name}.s3d"]);
         if (FileName == null)
         {
-            GD.PrintErr($"EqResourceLoader: {name} doesn't exist!");
+            GD.PrintErr($"LoreResourceLoader: {name} doesn't exist!");
             return false;
         }
 
@@ -93,7 +93,7 @@ public partial class EqResourceLoader : Node
             return await ProcessEQGFile(archive);
         }
 
-        GD.PrintErr($"EqResourceLoader: {name} is an eqg and unsupported!");
+        GD.PrintErr($"LoreResourceLoader: {name} is an eqg and unsupported!");
         return false;
     }
 
@@ -108,16 +108,16 @@ public partial class EqResourceLoader : Node
 
     private async Task<bool> ProcessS3DFile(PfsArchive archive)
     {
-        GD.Print($"EqResourceLoader: processing S3D {FileName} - images {Images.Count}");
+        GD.Print($"LoreResourceLoader: processing S3D {FileName} - images {Images.Count}");
         var wldFiles = archive.ProcessWldFiles(this);
         if (wldFiles.TryGetValue("objects.wld", out var objectsWld))
         {
-            GD.PrintErr($"EqResourceLoader: {Name} contains objects.wld but is unsupported: {objectsWld}");
+            GD.PrintErr($"LoreResourceLoader: {Name} contains objects.wld but is unsupported: {objectsWld}");
         }
 
         if (wldFiles.TryGetValue("lights.wld", out var lightsWld))
         {
-            GD.PrintErr($"EqResourceLoader: {Name} contains lights.wld but is unsupported: {lightsWld}");
+            GD.PrintErr($"LoreResourceLoader: {Name} contains lights.wld but is unsupported: {lightsWld}");
         }
 
         if (wldFiles.TryGetValue($"{Name}.wld", out var mainWld))
@@ -131,7 +131,7 @@ public partial class EqResourceLoader : Node
 
     private async Task<bool> ProcessEQGFile(PfsArchive archive)
     {
-        GD.Print($"EqResourceLoader: processing EQG {FileName} - images {Images.Count}");
+        GD.Print($"LoreResourceLoader: processing EQG {FileName} - images {Images.Count}");
         return true;
     }
 }

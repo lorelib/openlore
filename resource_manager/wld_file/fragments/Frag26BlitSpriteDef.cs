@@ -9,7 +9,7 @@ public partial class Frag26BlitSpriteDef : WldFragment
     [Export] public int Flags;
     [Export] public Frag05SimpleSprite SimpleSprite;
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());

@@ -7,7 +7,7 @@ using OpenLore.resource_manager.wld_file.fragments;
 namespace OpenLore.resource_manager;
 
 [GlobalClass]
-public partial class EqZoneResources : EqResources
+public partial class LoreZoneResources : LoreResources
 {
     private Frag21WorldTree _activeZone = null;
     private List<Frag28PointLight> _activeZoneLights;
@@ -71,6 +71,6 @@ public partial class EqZoneResources : EqResources
 
     protected override void OnLoadCompleted()
     {
-        GD.Print($"EqZoneResources finished in {Time.GetTicksMsec()}ms since game started");
+        GD.Print($"LoreZoneResources finished in {Time.GetTicksMsec()}ms since game started");
     }
 }

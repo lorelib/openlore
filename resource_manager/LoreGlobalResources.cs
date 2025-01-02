@@ -4,7 +4,7 @@ using OpenLore.GameController;
 
 namespace OpenLore.resource_manager;
 
-public partial class EqGlobalResources : EqResources
+public partial class LoreGlobalResources : LoreResources
 {
     
     public override void _Ready()
@@ -20,6 +20,6 @@ public partial class EqGlobalResources : EqResources
 
     protected override void OnLoadCompleted()
     {
-        GD.Print($"EqGlobalResources finished in {Time.GetTicksMsec()}ms since game started");
+        GD.Print($"LoreGlobalResources finished in {Time.GetTicksMsec()}ms since game started");
     }
 }

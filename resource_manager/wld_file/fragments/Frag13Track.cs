@@ -21,7 +21,7 @@ public partial class Frag13Track : WldFragment
     [Export] public bool InterpolateAllowed;
     [Export] public int FrameMs;
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());

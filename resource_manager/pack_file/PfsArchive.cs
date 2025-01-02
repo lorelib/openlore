@@ -45,7 +45,7 @@ public partial class PfsArchive : Resource
         return result;
     }
 
-    public Godot.Collections.Dictionary<string, WldFile> ProcessWldFiles(EqResourceLoader loader)
+    public Godot.Collections.Dictionary<string, WldFile> ProcessWldFiles(LoreResourceLoader loader)
     {
         List<Task> wldHandles = [];
         for (var i = 0; i < Files.Count; i++)
@@ -67,7 +67,7 @@ public partial class PfsArchive : Resource
         return WldFiles;
     }
 
-    private void ProcessWldResource(PfsFile pfsFile, int index, EqResourceLoader loader)
+    private void ProcessWldResource(PfsFile pfsFile, int index, LoreResourceLoader loader)
     {
         var wld = new WldFile(pfsFile, loader);
         Files[index] = wld;

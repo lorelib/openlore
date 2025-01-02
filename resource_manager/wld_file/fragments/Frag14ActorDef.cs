@@ -21,7 +21,7 @@ internal partial class Frag14ActorDef : WldFragment
     [Export] public int BoundsRef;
     [Export] public int CurrentAction;
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());
