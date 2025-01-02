@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://GameController/GameController.cs" id="1_yhlwj"]
 [ext_resource type="Script" path="res://resource_manager/ResourceManager.cs" id="2_57lqd"]
-[ext_resource type="Script" path="res://resource_manager/EqGlobalResources.cs" id="3_74vw4"]
-[ext_resource type="Script" path="res://resource_manager/EqZoneResources.cs" id="4_nswmo"]
+[ext_resource type="Script" path="res://resource_manager/LoreGlobalResources.cs" id="3_74vw4"]
+[ext_resource type="Script" path="res://resource_manager/LoreZoneResources.cs" id="4_nswmo"]
 
 [node name="GameController" type="Node"]
 script = ExtResource("1_yhlwj")

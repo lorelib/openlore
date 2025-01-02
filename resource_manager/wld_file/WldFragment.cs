@@ -12,11 +12,11 @@ public abstract partial class WldFragment : Resource
     [Export] public int Size;
     [Export] public string Name;
     public WldFile Wld;
-    public EqResourceLoader Loader;
+    public LoreResourceLoader Loader;
 
     protected BinaryReader Reader { get; set; }
 
-    public virtual void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public virtual void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         Index = index;
         Size = size;

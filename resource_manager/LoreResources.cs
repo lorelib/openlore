@@ -5,7 +5,7 @@ using OpenLore.resource_manager.godot_resources;
 namespace OpenLore.resource_manager;
 
 [GlobalClass]
-public abstract partial class EqResources : Node
+public abstract partial class LoreResources : Node
 {
     private Godot.Collections.Dictionary<string, BlitActorDefinition> _blitActor = [];
     private Godot.Collections.Dictionary<string, HierarchicalActorDefinition> _hierarchicalActor = [];
@@ -29,7 +29,7 @@ public abstract partial class EqResources : Node
         var allDone = true;
         foreach (var child in children)
         {
-            if (child is EqResourceLoader { Loaded: false })
+            if (child is LoreResourceLoader { Loaded: false })
             {
                 allDone = false;
             }
@@ -45,7 +45,7 @@ public abstract partial class EqResources : Node
 
     protected void StartEqResourceLoad(string name)
     {
-        var loader = new EqResourceLoader()
+        var loader = new LoreResourceLoader()
         {
             Name = name.ToLower(), // Name replaces . with _
             RequestedFileName = name.ToLower(),
@@ -62,7 +62,7 @@ public abstract partial class EqResources : Node
         children.Reverse();
         foreach (var node in children)
         {
-            if (node is not EqResourceLoader loader) continue;
+            if (node is not LoreResourceLoader loader) continue;
             var image = loader.GetImage(name);
             if (image != null) return image;
         }
@@ -76,7 +76,7 @@ public abstract partial class EqResources : Node
         children.Reverse();
         foreach (var node in children)
         {
-            if (node is not EqResourceLoader loader) continue;
+            if (node is not LoreResourceLoader loader) continue;
             var image = loader.GetActor(tag);
             if (image != null) return image;
         }
@@ -91,7 +91,7 @@ public abstract partial class EqResources : Node
         children.Reverse();
         foreach (var node in children)
         {
-            if (node is not EqResourceLoader loader) continue;
+            if (node is not LoreResourceLoader loader) continue;
             foreach (var animation in loader.GetAnimationsFor(tag).Values)
             {
                 result[(animation.AnimationName, animation.BoneName)] = animation;

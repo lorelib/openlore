@@ -12,7 +12,7 @@ public static class WldFragmentBuilder
         { 0x00, () => new Frag00Default() },
         { 0x01, () => new Frag01DefaultPaletteFile() },
         { 0x02, () => new Frag02UserData() },
-        { 0x03, () => new Frag03BMInfo() },
+        { 0x03, () => new Frag03BmInfo() },
         { 0x04, () => new Frag04SimpleSpriteDef() },
         { 0x05, () => new Frag05SimpleSprite() },
         { 0x06, () => new Frag06Sprite2DDef() },

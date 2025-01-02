@@ -10,15 +10,15 @@ public partial class ResourceManager : Node
 {
     // Where instantiation of objects in the zone is going to happen
     private Node3D _sceneRoot;
-    private EqGlobalResources _globalResources;
-    private EqZoneResources _zoneResources;
+    private LoreGlobalResources _globalResources;
+    private LoreZoneResources _zoneResources;
 
     public override void _Ready()
     {
         GD.Print("Starting Resource Manager!");
         _sceneRoot = GetNode<Node3D>("SceneRoot");
-        _globalResources = GetNode<EqGlobalResources>("GlobalResources");
-        _zoneResources = GetNode<EqZoneResources>("ZoneResources");
+        _globalResources = GetNode<LoreGlobalResources>("GlobalResources");
+        _zoneResources = GetNode<LoreZoneResources>("ZoneResources");
     }
 
     public override void _Process(double delta)

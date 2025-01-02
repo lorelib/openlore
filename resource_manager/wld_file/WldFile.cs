@@ -42,7 +42,7 @@ public partial class WldFile : Resource
     {
     }
 
-    public WldFile(PfsFile pfsFile, EqResourceLoader loader)
+    public WldFile(PfsFile pfsFile, LoreResourceLoader loader)
     {
         if (pfsFile == null)
         {

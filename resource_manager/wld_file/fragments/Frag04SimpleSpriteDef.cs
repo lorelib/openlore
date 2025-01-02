@@ -16,10 +16,10 @@ public partial class Frag04SimpleSpriteDef : WldFragment
     [Export] public int AnimationDelayMs;
     [Export] public uint CurrentFrame;
     [Export] public int BitmapCount;
-    [Export] public Godot.Collections.Array<Frag03BMInfo> BitmapNames;
+    [Export] public Godot.Collections.Array<Frag03BmInfo> BitmapNames;
 
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());
@@ -37,6 +37,6 @@ public partial class Frag04SimpleSpriteDef : WldFragment
         if (Animated && Sleep) AnimationDelayMs = Reader.ReadInt32();
 
         BitmapNames = [];
-        for (var i = 0; i < BitmapCount; ++i) BitmapNames.Add(wld.GetFragment(Reader.ReadInt32()) as Frag03BMInfo);
+        for (var i = 0; i < BitmapCount; ++i) BitmapNames.Add(wld.GetFragment(Reader.ReadInt32()) as Frag03BmInfo);
     }
 }

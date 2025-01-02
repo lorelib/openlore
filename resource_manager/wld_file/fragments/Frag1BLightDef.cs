@@ -13,7 +13,7 @@ public partial class Frag1BLightDef : WldFragment
     [Export] public uint Sleep;
     public List<float> LightLevels = [];
 
-    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, EqResourceLoader loader)
+    public override void Initialize(int index, int type, int size, byte[] data, WldFile wld, LoreResourceLoader loader)
     {
         base.Initialize(index, type, size, data, wld, loader);
         Name = wld.GetName(Reader.ReadInt32());
