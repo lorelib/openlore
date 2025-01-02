@@ -33,7 +33,7 @@ public partial class NetworkSession : PacketPeerUdp
     public new Error ConnectToHost(string host, int port)
     {
         ConnectCode = (uint)GlobalVariables.Rand.Next();
-        var result = base.ConnectToHost(host, port);
+        var result = SetDestAddress(host, port);
         GD.Print($"Connected to {host}:{port} => {result}");
         Disconnected = false;
         var writer = new PacketWriter();

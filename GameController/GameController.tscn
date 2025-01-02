@@ -7,7 +7,6 @@
 
 [node name="GameController" type="Node"]
 script = ExtResource("1_yhlwj")
-_debugSkipLogin = true
 
 [node name="ResourceManager" type="Node" parent="."]
 process_thread_group = 2
