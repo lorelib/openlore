@@ -28,7 +28,7 @@ public partial class WldFile : Resource
     private Godot.Collections.Dictionary<int, ArrayMesh> _newMeshes = [];
     [Export] public Array<Frag28PointLight> ZoneLights;
 
-    [Export] public Frag21WorldTree WorldTree = null;
+    [Export] public Frag21WorldTree WorldTree;
 
     private readonly List<WldFragment> _fragments = [];
     private readonly System.Collections.Generic.Dictionary<Type, List<WldFragment>> _fragmentTypeDictionary = [];

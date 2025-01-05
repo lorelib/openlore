@@ -11,8 +11,9 @@ public abstract partial class LoreResources : Node
     private Godot.Collections.Dictionary<string, HierarchicalActorDefinition> _hierarchicalActor = [];
     private Godot.Collections.Dictionary<string, ActorSkeletonPath> _extraAnimations = [];
 
-    private int _ageCounter = 0;
-    private bool _flaggedFinished = false;
+    private int _ageCounter;
+
+    public bool Completed { get; private set; }
 
     public override void _Ready()
     {
@@ -20,12 +21,11 @@ public abstract partial class LoreResources : Node
 
     public override void _Process(double delta)
     {
-        if (_flaggedFinished)
-        {
-            return;
-        }
+        if (Completed) return;
 
         var children = GetChildren();
+        if (children.Count == 0) return;
+
         var allDone = true;
         foreach (var child in children)
         {
@@ -35,25 +35,26 @@ public abstract partial class LoreResources : Node
             }
         }
 
-        if (!allDone || _flaggedFinished) return;
+        if (!allDone || Completed) return;
 
-        _flaggedFinished = true;
+        Completed = true;
         OnLoadCompleted();
     }
 
     protected abstract void OnLoadCompleted();
 
-    protected void StartEqResourceLoad(string name)
+    protected LoreResourceLoader StartEqResourceLoad(string name)
     {
+        Completed = false;
         var loader = new LoreResourceLoader()
         {
             Name = name.ToLower(), // Name replaces . with _
             RequestedFileName = name.ToLower(),
             AgeCounter = _ageCounter
         };
-        loader.SetProcessThreadGroup(ProcessThreadGroupEnum.SubThread);
         AddChild(loader);
         _ageCounter += 1;
+        return loader;
     }
 
     public Image GetImage(string name)

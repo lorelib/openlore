@@ -6,7 +6,6 @@ namespace OpenLore.resource_manager;
 
 public partial class LoreGlobalResources : LoreResources
 {
-    
     public override void _Ready()
     {
         var assetPath = GameConfig.Instance.AssetPath;

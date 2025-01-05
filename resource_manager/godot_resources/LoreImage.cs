@@ -41,8 +41,7 @@ public partial class LoreImage : Resource
 
     public Image Transparent()
     {
-        if (_withTransparency != null)
-            return _withTransparency;
+        if (_withTransparency != null) return _withTransparency;
         
         if ((string)GetMeta("original_file_type") != "BMP")
             return _baseline;

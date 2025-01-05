@@ -45,7 +45,6 @@ public partial class Frag21WorldTree : WldFragment, IIntoGodotZone
     public Node3D ToGodotZone()
     {
         var zone = new Node3D();
-        // zone.RotateX((float)(-Math.PI / 2));
 
         var queue = new Queue<int>();
         queue.Enqueue(0);
@@ -58,7 +57,7 @@ public partial class Frag21WorldTree : WldFragment, IIntoGodotZone
                 if (mesh != null)
                 {
                     var arrayMesh = mesh.ToGodotMesh();
-                    var inst = new MeshInstance3D { Name = mesh.Name, Mesh = arrayMesh, Position = mesh.Centre };
+                    var inst = new MeshInstance3D { Name = mesh.Name, Mesh = arrayMesh };
                     zone.AddChild(inst);
                 }
             }
