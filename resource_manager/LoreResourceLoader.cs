@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 using OpenLore.GameController;
 using OpenLore.resource_manager.godot_resources;
 using OpenLore.resource_manager.pack_file;
+using OpenLore.resource_manager.wld_file.fragments;
 
 namespace OpenLore.resource_manager;
 
@@ -23,6 +25,11 @@ public partial class LoreResourceLoader : Node
     [Export] public Godot.Collections.Dictionary<int, ArrayMesh> Meshes = [];
     [Export] public Godot.Collections.Dictionary<string, Resource> ActorDefs = [];
     [Export] public Godot.Collections.Dictionary<int, ActorSkeletonPath> ExtraAnimations = [];
+    
+    [Signal]
+    public delegate void ZoneWorldTreeLoadedEventHandler(Frag21WorldTree worldTree);
+    [Signal]
+    public delegate void ZonePointLightsLoadedEventHandler(Array<Frag28PointLight> lights);
 
     private Task<bool> _task;
 
@@ -43,7 +50,7 @@ public partial class LoreResourceLoader : Node
         Loaded = true;
         _task = null;
 
-        GD.Print($"LoreResourceLoader: completed processing {Name} age {AgeCounter} failed {Failed}");
+        // GD.Print($"LoreResourceLoader: completed processing {Name} age {AgeCounter} failed {Failed}");
     }
 
     public LoreImage GetImage(string imageName)
@@ -56,9 +63,9 @@ public partial class LoreResourceLoader : Node
         return Failed ? null : ActorDefs.GetValueOrDefault(tag);
     }
 
-    public Dictionary<(string, string), ActorSkeletonPath> GetAnimationsFor(string tag)
+    public System.Collections.Generic.Dictionary<(string, string), ActorSkeletonPath> GetAnimationsFor(string tag)
     {
-        Dictionary<(string, string), ActorSkeletonPath> result = [];
+        System.Collections.Generic.Dictionary<(string, string), ActorSkeletonPath> result = [];
         if (Failed) return result;
         foreach (var animation in ExtraAnimations.Values)
         {
@@ -71,7 +78,7 @@ public partial class LoreResourceLoader : Node
 
     private async Task<bool> LoadFile(string name)
     {
-        GD.Print($"LoreResourceLoader: requesting {name} at age {AgeCounter}");
+        // GD.Print($"LoreResourceLoader: requesting {name} at age {AgeCounter}");
         var assetPath = GameConfig.Instance.AssetPath;
         FileName = await TestFiles([$"{assetPath}/{name}", $"{assetPath}/{name}.eqg", $"{assetPath}/{name}.s3d"]);
         if (FileName == null)
@@ -117,13 +124,17 @@ public partial class LoreResourceLoader : Node
 
         if (wldFiles.TryGetValue("lights.wld", out var lightsWld))
         {
-            GD.PrintErr($"LoreResourceLoader: {Name} contains lights.wld but is unsupported: {lightsWld}");
+            EmitSignal(SignalName.ZonePointLightsLoaded, lightsWld.ZoneLights);
         }
 
         if (wldFiles.TryGetValue($"{Name}.wld", out var mainWld))
         {
             ActorDefs = mainWld.ActorDefs;
             ExtraAnimations = mainWld.ExtraAnimations;
+            if (mainWld.WorldTree != null)
+            {
+                EmitSignal(SignalName.ZoneWorldTreeLoaded, mainWld.WorldTree);
+            }
         }
 
         return true;

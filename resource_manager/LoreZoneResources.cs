@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Godot;
+using Godot.Collections;
 using OpenLore.GameController;
 using OpenLore.resource_manager.wld_file.fragments;
 
@@ -9,8 +9,9 @@ namespace OpenLore.resource_manager;
 [GlobalClass]
 public partial class LoreZoneResources : LoreResources
 {
-    private Frag21WorldTree _activeZone = null;
-    private List<Frag28PointLight> _activeZoneLights;
+    private string _activeZoneName;
+    [Export] private Frag21WorldTree _activeZoneWorldTree;
+    [Export] private Array<Frag28PointLight> _activeZoneLights;
 
     // TODO
 
@@ -34,6 +35,10 @@ public partial class LoreZoneResources : LoreResources
     // - process %s.wld
     public void StartLoadingZone(string zoneName)
     {
+        _activeZoneWorldTree = null;
+        _activeZoneLights = null;
+        _activeZoneName = zoneName;
+
         var assetPath = GameConfig.Instance.AssetPath;
 
         StartEqResourceLoad($"{zoneName}_obj2");
@@ -58,19 +63,43 @@ public partial class LoreZoneResources : LoreResources
         using var assetReader = new StreamReader($"{assetPath}/{zoneName}_assets.txt");
 
         {
-            var count = int.Parse(assetReader.ReadLine()!);
-            for (var i = 0; i < count; i++)
+            while (!assetReader.EndOfStream)
             {
                 var line = assetReader.ReadLine();
                 StartEqResourceLoad(line);
             }
         }
 
-        StartEqResourceLoad(zoneName);
+        var zoneLoader = StartEqResourceLoad(zoneName);
+        zoneLoader.ZoneWorldTreeLoaded += OnWorldTreeLoaded;
+        zoneLoader.ZonePointLightsLoaded += OnPointLightsLoaded;
     }
 
     protected override void OnLoadCompleted()
     {
-        GD.Print($"LoreZoneResources finished in {Time.GetTicksMsec()}ms since game started");
+        GD.Print($"LoreZoneResources {_activeZoneName} finished in {Time.GetTicksMsec()}ms since game started");
+    }
+
+    private void OnWorldTreeLoaded(Frag21WorldTree worldTree)
+    {
+        _activeZoneWorldTree = worldTree;
+    }
+
+    private void OnPointLightsLoaded(Array<Frag28PointLight> lights)
+    {
+        _activeZoneLights = lights;
+    }
+
+    public bool InstantiateZone(Node3D sceneRoot)
+    {
+        if (_activeZoneWorldTree == null || _activeZoneLights == null) return false;
+
+        sceneRoot.AddChild(_activeZoneWorldTree.ToGodotZone());
+        foreach (var l in _activeZoneLights)
+        {
+            sceneRoot.AddChild(l.ToGodotLight());
+        }
+
+        return true;
     }
 }

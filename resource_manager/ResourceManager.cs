@@ -12,6 +12,8 @@ public partial class ResourceManager : Node
     private Node3D _sceneRoot;
     private LoreGlobalResources _globalResources;
     private LoreZoneResources _zoneResources;
+    private bool _zoneLoading;
+    private bool _zoneInstantiated;
 
     public override void _Ready()
     {
@@ -23,11 +25,22 @@ public partial class ResourceManager : Node
 
     public override void _Process(double delta)
     {
+        if (_globalResources.Completed && !_zoneResources.Completed && !_zoneLoading)
+        {
+            GD.Print("Loading Zone Resources!");
+            _zoneLoading = true;
+            _zoneResources.StartLoadingZone("gfaydark");
+        }
+
+        if (_globalResources.Completed && _zoneResources.Completed && !_zoneInstantiated)
+        {
+            _zoneInstantiated = _zoneResources.InstantiateZone(_sceneRoot);
+        }
     }
 
-    public Image GetImage(string imageName)
+    public void LoadZone(string zoneName)
     {
-        return _zoneResources.GetImage(imageName) ?? _globalResources.GetImage(imageName);
+        _zoneResources.StartLoadingZone(zoneName);
     }
 
     public HierarchicalActorInstance InstantiateCharacter(string tag)
@@ -47,6 +60,11 @@ public partial class ResourceManager : Node
         return character;
     }
 
+    public Image GetImage(string imageName)
+    {
+        return _zoneResources.GetImage(imageName) ?? _globalResources.GetImage(imageName);
+    }
+
     public List<ActorSkeletonPath> GetAnimationsFor(string actorName)
     {
         GD.Print($"Getting animations for {actorName}");
@@ -58,51 +76,5 @@ public partial class ResourceManager : Node
 
         GD.Print($"Got {result.Count} for {actorName}");
         return result.Values.ToList();
-    }
-
-    //             case PfsArchiveType.Zone:
-    //                 var lights = archive.WldFiles.GetValueOrDefault("lights.wld");
-    //                 if (lights == null)
-    //                 {
-    //                     GD.PrintErr("No lights.wld found");
-    //                     continue;
-    //                 }
-    //                 GD.Print($"Processing lights");
-    //                 _activeZoneLights = lights.ZoneLights;
-    //                 
-    //                 var objects = archive.WldFiles.GetValueOrDefault("objects.wld");
-    //                 if (objects == null)
-    //                 {
-    //                     GD.PrintErr("No objects.wld found");
-    //                     continue;
-    //                 }
-    //                 GD.Print($"Processing objects");
-    //                 // TODO: Process objects.wld
-    //                 
-    //                 foreach (var wldFile in archive.WldFiles)
-    //                 {
-    //                     if (wldFile.Value.WorldTree != null)
-    //                     {
-    //                         GD.Print($"OnPFSArchiveLoaded: activating zone {wldFile.Key}");
-    //                         _activeZone = wldFile.Value.WorldTree;
-    //                     }
-    //                 }
-    //
-    //
-    // public void InstantiateZone()
-    // {
-    //     if (_activeZone == null) return;
-    //     GD.Print($"Instantiating zone {_activeZone}");
-    //     _sceneRoot.AddChild(_activeZone.ToGodotZone());
-    //     foreach (var l in _activeZoneLights)
-    //     {
-    //         _sceneRoot.AddChild(l.ToGodotLight());
-    //     }
-    // }
-    //
-    
-    public void LoadZone(string zoneName)
-    {
-        _zoneResources.StartLoadingZone(zoneName);
     }
 }
