@@ -51,6 +51,7 @@ public static class WldFragmentBuilder
         { 0x33, () => new Frag33DmRGBTrack() },
         { 0x34, () => new Frag34ParticleCloudDef() },
         { 0x35, () => new Frag35GlobalAmbientLightDef() },
-        { 0x36, () => new Frag36DmSpriteDef2() }
+        { 0x36, () => new Frag36DmSpriteDef2() },
+        { 0x37, () => new Frag37SomethingSomething() },
     };
 }
