@@ -44,6 +44,7 @@ public static class WldFragmentBuilder
 
         { 0x2C, () => new Frag2CDmSpriteDef() },
         { 0x2D, () => new Frag2DDmSprite() },
+        { 0x2F, () => new Frag2FSomethingSomething() },
         
         { 0x30, () => new Frag30MaterialDef() },
         { 0x31, () => new Frag31MaterialPalette() },
