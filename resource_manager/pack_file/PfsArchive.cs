@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
+using OpenLore.resource_manager.file_formats.parsers;
 using OpenLore.resource_manager.godot_resources;
 using OpenLore.resource_manager.wld_file;
 
@@ -14,7 +15,6 @@ public partial class PfsArchive : Resource
     [Export] public string LoadedPath;
     [Export] public Array<Resource> Files = [];
     [Export] public Godot.Collections.Dictionary<string, WldFile> WldFiles = [];
-    [Export] public PfsArchiveType Type;
 
     public async Task<Godot.Collections.Dictionary<string, LoreImage>> ProcessImages()
     {
@@ -69,7 +69,8 @@ public partial class PfsArchive : Resource
 
     private void ProcessWldResource(PfsFile pfsFile, int index, LoreResourceLoader loader)
     {
-        var wld = new WldFile(pfsFile, loader);
+        var wld = WldParser.Parse(pfsFile, loader);
+        wld.Process();
         Files[index] = wld;
         WldFiles[pfsFile.Name] = wld;
     }

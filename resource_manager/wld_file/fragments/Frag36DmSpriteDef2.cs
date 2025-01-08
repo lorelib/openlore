@@ -86,7 +86,7 @@ public partial class Frag36DmSpriteDef2 : WldFragment, IIntoGodotMesh
         }
 
         for (var i = 0; i < textureCoordinateCount; ++i)
-            if (wld.IsNewWldFormat)
+            if (wld.NewFormat)
                 TextureUvCoordinates[i] = new Vector2(Reader.ReadSingle(), Reader.ReadSingle());
             else
                 TextureUvCoordinates[i] = new Vector2(Reader.ReadInt16() / 256.0f, Reader.ReadInt16() / 256.0f);

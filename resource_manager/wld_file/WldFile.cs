@@ -14,11 +14,8 @@ namespace OpenLore.resource_manager.wld_file;
 // Lantern Extractor class
 public partial class WldFile : Resource
 {
-    private const int WldFileIdentifier = 0x54503D02;
-    private const int WldFormatOldIdentifier = 0x00015500;
-    private const int WldFormatNewIdentifier = 0x1000C800;
-
-    [Export] public bool IsNewWldFormat;
+    [Export] public string Name;
+    [Export] public bool NewFormat;
     [Export] public Godot.Collections.Dictionary<string, Array<Resource>> Resources = [];
 
     [Export] public Godot.Collections.Dictionary<string, Resource> ActorDefs = [];
@@ -37,105 +34,42 @@ public partial class WldFile : Resource
     private WldStrings _strings;
 
     public WldFile()
-        : this(null, null)
     {
-    }
-
-    public WldFile(PfsFile pfsFile, LoreResourceLoader loader)
-    {
-        if (pfsFile == null)
-        {
-            GD.PrintErr("Invalid file received, doing nothing");
-            return;
-        }
-
-        Name = pfsFile.Name;
-        var content = pfsFile.FileBytes;
-
-        // GD.Print($"WldFile {Name}: extracting WLD archive of length {content.Length}");
-        var reader = new BinaryReader(new MemoryStream(content));
-
-        var identifier = reader.ReadInt32();
-
-        if (identifier != WldFileIdentifier)
-        {
-            GD.PrintErr("Not a valid WLD file!");
-            return;
-        }
-
         _fragments =
         [
             new FragXXFallback()
         ];
+    }
 
-        var version = reader.ReadInt32();
+    public void SetStrings(WldStrings strings)
+    {
+        _strings = strings;
+    }
 
-        switch (version)
-        {
-            case WldFormatOldIdentifier:
-                break;
-            case WldFormatNewIdentifier:
-                IsNewWldFormat = true;
-                GD.Print("New WLD format not fully supported.");
-                break;
-            default:
-                GD.PrintErr("Unrecognized WLD format.");
-                return;
-        }
+    public void AddFragment(WldFragment fragment)
+    {
+        _fragments.Add(fragment);
 
-        var fragmentCount = reader.ReadUInt32();
-        var bspRegionCount = reader.ReadUInt32();
-        var maxObjectBytes = reader.ReadInt32();
-        var stringHashSize = reader.ReadInt32();
-        var stringCount = reader.ReadInt32();
+        var type = fragment.GetType();
+        if (!_fragmentTypeDictionary.ContainsKey(type))
+            _fragmentTypeDictionary[type] = [];
 
-        var strings = reader.ReadBytes(stringHashSize);
-        _strings = new WldStrings(strings);
+        if (
+            !string.IsNullOrEmpty(fragment.Name)
+        )
+            _fragmentNameDictionary.TryAdd(fragment.Name, fragment);
 
-        for (var i = 1; i <= fragmentCount; ++i)
-        {
-            var fragSize = reader.ReadInt32();
-            var fragType = reader.ReadInt32();
-            var fragmentContents = reader.ReadBytes(fragSize);
+        _fragmentTypeDictionary[type].Add(fragment);
+    }
 
-            _fragmentTypes[i + 1] = fragType;
-            _fragmentContents[i + 1] = fragmentContents;
-
-            var newFragment = !WldFragmentBuilder.Fragments.TryGetValue(
-                fragType,
-                out var value
-            )
-                ? new FragXXFallback()
-                : value();
-
-            if (newFragment is FragXXFallback)
-            {
-                GD.PrintErr($"WldFile {Name}: Unhandled fragment type: {fragType:x}");
-                break;
-            }
-
-            newFragment.Initialize(i, fragType, fragSize, fragmentContents, this, loader);
-
-            _fragments.Add(newFragment);
-            if (!_fragmentTypeDictionary.ContainsKey(newFragment.GetType()))
-                _fragmentTypeDictionary[newFragment.GetType()] = [];
-
-            if (
-                !string.IsNullOrEmpty(newFragment.Name)
-            )
-                _fragmentNameDictionary.TryAdd(newFragment.Name, newFragment);
-
-            _fragmentTypeDictionary[newFragment.GetType()].Add(newFragment);
-        }
-        
+    public void Process()
+    {
         BuildMaterials();
         BuildActorDefs();
         BuildAnimations();
         BuildWorldTree();
         BuildLights();
     }
-
-    [Export] public string Name { get; set; }
 
     private List<T> GetFragmentsOfType<T>()
         where T : WldFragment
@@ -148,7 +82,7 @@ public partial class WldFile : Resource
     public string GetName(int reference)
     {
         return _strings.GetName(reference) ?? _fragments[reference].Name;
-    } 
+    }
 
     public WldFragment GetFragmentByName(string name)
     {
@@ -269,6 +203,7 @@ public partial class WldFile : Resource
                 GD.PrintErr($"More than one world tree found for {Name}.");
                 break;
         }
+
         GD.Print("WldFile: Building world tree");
         WorldTree = worlds[0];
         var regions = GetFragmentsOfType<Frag22Region>();
