@@ -4,10 +4,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using Godot;
+using OpenLore.resource_manager.pack_file;
 
-namespace OpenLore.resource_manager.pack_file;
+namespace OpenLore.resource_manager.file_formats.parsers;
 
-public static class PackFileParser
+public static class PfsParser
 {
     public static async Task<PfsArchive> Load(string path)
     {

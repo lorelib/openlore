@@ -45,7 +45,7 @@ public partial class EqPackFileResourceLoader : ResourceFormatLoader
     public override Variant _Load(string path, string originalPath, bool useSubThreads, int cacheMode)
     {
         // GD.Print($"_Load({path}, {originalPath}, {useSubThreads}, {cacheMode})");
-        // return PackFileParser.Load(path);
+        // return PfsParser.Load(path);
         return false;
     }
 }

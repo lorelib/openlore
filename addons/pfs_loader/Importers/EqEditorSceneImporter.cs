@@ -27,7 +27,7 @@ public partial class EqEditorSceneImporter : EditorSceneFormatImporter
     public override GodotObject _ImportScene(string path, uint flags, Godot.Collections.Dictionary options)
     {
         // GD.Print("EQEditorSceneImporter::_ImportScene()");
-        // var resource = PackFileParser.Load(path);
+        // var resource = PfsParser.Load(path);
         var root = new Node3D();
         root.Name = path;
         // var extraAnimations = new Dictionary<string, ActorSkeletonPath>();
