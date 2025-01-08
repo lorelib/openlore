@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 using OpenLore.GameController;
+using OpenLore.resource_manager.file_formats.parsers;
 using OpenLore.resource_manager.godot_resources;
 using OpenLore.resource_manager.pack_file;
 using OpenLore.resource_manager.wld_file.fragments;
@@ -87,7 +88,7 @@ public partial class LoreResourceLoader : Node
             return false;
         }
 
-        var archive = await PackFileParser.Load(FileName);
+        var archive = await PfsParser.Load(FileName);
         Images = await archive.ProcessImages();
 
         if (FileName.EndsWith(".s3d"))

@@ -65,7 +65,7 @@ public partial class EqPackFileImporter : EditorImportPlugin
         {
             GD.Print($"PfsArchive: Finished post-processing archive: {sourceFile}");
             var destFile = $"{savePath}.{_GetSaveExtension()}";
-            // var archive = PackFileParser.Load(sourceFile);
+            // var archive = PfsParser.Load(sourceFile);
             // var result = ResourceSaver.Save(archive, destFile);
             GD.Print($"PfsArchive: Finished writing archive: {sourceFile} to {destFile}");
             // return result;
