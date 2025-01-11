@@ -23,11 +23,11 @@ public partial class Frag28PointLight : WldFragment, IIntoGodotLight
         Radius = Reader.ReadSingle();
     }
 
-    public Light3D ToGodotLight()
+    public Light3D ToGodotLight(string name)
     {
         return new OmniLight3D()
         {
-            Name = Name,
+            Name = name,
             Position = Position,
             OmniRange = Radius,
             OmniAttenuation = 0.25f,

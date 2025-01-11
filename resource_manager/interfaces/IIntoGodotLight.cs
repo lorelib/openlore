@@ -4,5 +4,5 @@ namespace OpenLore.resource_manager.interfaces;
 
 public interface IIntoGodotLight
 {
-    public Light3D ToGodotLight();
+    public Light3D ToGodotLight(string name);
 }
