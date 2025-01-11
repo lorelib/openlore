@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bav1ji3y2p1d4"]
+[gd_scene load_steps=5 format=3 uid="uid://bav1ji3y2p1d4"]
 
 [ext_resource type="Script" path="res://base_scene.gd" id="1_p6kus"]
 [ext_resource type="Script" path="res://addons/debug_camera/scripts/DebugCamera3D.gd" id="2_jnlh8"]
