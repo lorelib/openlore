@@ -44,6 +44,7 @@ script = ExtResource("4_slpxg")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraDefaultRotation"]
+far = 16000.0
 script = ExtResource("2_jnlh8")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CameraPosition/CameraDefaultRotation/Camera3D"]
