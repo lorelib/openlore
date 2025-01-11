@@ -60,13 +60,17 @@ public partial class LoreZoneResources : LoreResources
             }
         }
 
-        using var assetReader = new StreamReader($"{assetPath}/{zoneName}_assets.txt");
-
+        var assetsPath = $"{assetPath}/{zoneName}_assets.txt";
+        if (File.Exists(assetsPath))
         {
-            while (!assetReader.EndOfStream)
+            using var assetReader = new StreamReader(assetsPath);
+
             {
-                var line = assetReader.ReadLine();
-                StartEqResourceLoad(line);
+                while (!assetReader.EndOfStream)
+                {
+                    var line = assetReader.ReadLine();
+                    StartEqResourceLoad(line);
+                }
             }
         }
 
