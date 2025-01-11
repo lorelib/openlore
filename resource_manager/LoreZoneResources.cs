@@ -99,9 +99,10 @@ public partial class LoreZoneResources : LoreResources
         if (_activeZoneWorldTree == null || _activeZoneLights == null) return false;
 
         sceneRoot.AddChild(_activeZoneWorldTree.ToGodotZone());
+        var count = 0;
         foreach (var l in _activeZoneLights)
         {
-            sceneRoot.AddChild(l.ToGodotLight());
+            sceneRoot.AddChild(l.ToGodotLight($"PointLight{count++}"));
         }
 
         return true;
